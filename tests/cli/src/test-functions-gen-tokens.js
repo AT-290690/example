@@ -23,7 +23,7 @@ module.exports.pipeToDolarsFine = pipeToDolarsFine
 /**
  * @example
  *  pipeTo("|")
- * // "fail"
+ * // ","
  * pipeTo("a|b" | "d|f" | "||||"; "$" | "|*|" | "x" | ";")
  * // "a$b" | "d$f" | "$$$$" | "a|*|b" | "d|*|f" | "|*||*||*||*|" | "axb" | "dxf" | "xxxx" | "a;b" | "d;f" | ";;;;"
  */

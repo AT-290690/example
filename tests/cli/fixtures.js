@@ -1,5 +1,5 @@
 ;(SETS = {
-  Sequance10: Array.from({ length: 10 })
+  Sequence10: Array.from({ length: 10 })
     .fill(null)
     .map((_, i) => i + 1),
   Integer: [58, 80, 90, 43, 50, 23, 47, 60, 83, 1],
@@ -56,7 +56,7 @@
     [`${PREFIX}Falsy`]: SETS.Falsy,
     [`${PREFIX}Integer`]: SETS.Integer,
     [`${PREFIX}Number`]: SETS.Number,
-    [`${PREFIX}Sequance10`]: SETS.Sequance10,
+    [`${PREFIX}Sequence10`]: SETS.Sequence10,
     [`${PREFIX}Power`]: SETS.Power,
     [`${PREFIX}String`]: SETS.String,
     [`${PREFIX}Date`]: SETS.Date,
@@ -67,7 +67,7 @@
     [`${PREFIX}Array`]: ['[]'],
     [`${PREFIX}Array<${PREFIX}Integer>`]: [`[${SETS.Integer.join(',')}]`],
     [`${PREFIX}Array<${PREFIX}Number>`]: [`[${SETS.Number.join(',')}]`],
-    [`${PREFIX}Array<${PREFIX}Sequance10>`]: [`[${SETS.Sequance10.join(',')}]`],
+    [`${PREFIX}Array<${PREFIX}Sequence10>`]: [`[${SETS.Sequence10.join(',')}]`],
     [`${PREFIX}Array<${PREFIX}Power>`]: [`[${SETS.Power.join(',')}]`],
     [`${PREFIX}Array<${PREFIX}Strings>`]: [`[${SETS.String.join(',')}]`],
     [`${PREFIX}Array<${PREFIX}Date>`]: [`[${SETS.Date.join(',')}]`],
@@ -82,8 +82,8 @@
       `new Set([${SETS.Integer.join(',')}])`,
     ],
     [`${PREFIX}Set<${PREFIX}Number>`]: [`new Set([${SETS.Number.join(',')}])`],
-    [`${PREFIX}Set<${PREFIX}Sequance10>`]: [
-      `new Set([${SETS.Sequance10.join(',')}])`,
+    [`${PREFIX}Set<${PREFIX}Sequence10>`]: [
+      `new Set([${SETS.Sequence10.join(',')}])`,
     ],
     [`${PREFIX}Set<${PREFIX}Power>`]: [`new Set([${SETS.Power.join(',')}])`],
     [`${PREFIX}Set<${PREFIX}String>`]: [`new Set([${SETS.String.join(',')}])`],

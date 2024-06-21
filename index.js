@@ -19,8 +19,6 @@ const CMD_LIST = `
 ------------------------------------
 | -indent  | indentation 0|1|2|3|4  |
 ------------------------------------
-| -inline  | file into single line  |
-------------------------------------
 | -example |  tutorial example      |
 ------------------------------------
 | -formula |  print tutorial gen    |
@@ -41,7 +39,10 @@ const CMD_LIST = `
   PREFIX = '#',
   PLACEHOLDER_TOKEN = '"?"',
   SETS = {
-    Sequance10: Array.from({ length: 10 })
+    Sequence10: Array.from({ length: 10 })
+      .fill(null)
+      .map((_, i) => i + 1),
+    Sequence100: Array.from({ length: 100 })
       .fill(null)
       .map((_, i) => i + 1),
     Integer: [0, 1, 42, 69, 100],
@@ -80,7 +81,8 @@ const CMD_LIST = `
     [`${PREFIX}Falsy`]: SETS.Falsy,
     [`${PREFIX}Integer`]: SETS.Integer,
     [`${PREFIX}Number`]: SETS.Number,
-    [`${PREFIX}Sequance10`]: SETS.Sequance10,
+    [`${PREFIX}Sequence10`]: SETS.Sequence10,
+    [`${PREFIX}Sequence100`]: SETS.Sequence100,
     [`${PREFIX}Power`]: SETS.Power,
     [`${PREFIX}String`]: SETS.String,
     [`${PREFIX}Date`]: SETS.Date,
@@ -91,7 +93,10 @@ const CMD_LIST = `
     [`${PREFIX}Array`]: ['[]'],
     [`${PREFIX}Array<${PREFIX}Integer>`]: [`[${SETS.Integer.join(',')}]`],
     [`${PREFIX}Array<${PREFIX}Number>`]: [`[${SETS.Number.join(',')}]`],
-    [`${PREFIX}Array<${PREFIX}Sequance10>`]: [`[${SETS.Sequance10.join(',')}]`],
+    [`${PREFIX}Array<${PREFIX}Sequence10>`]: [`[${SETS.Sequence10.join(',')}]`],
+    [`${PREFIX}Array<${PREFIX}Sequence100>`]: [
+      `[${SETS.Sequence100.join(',')}]`,
+    ],
     [`${PREFIX}Array<${PREFIX}Power>`]: [`[${SETS.Power.join(',')}]`],
     [`${PREFIX}Array<${PREFIX}Strings>`]: [`[${SETS.String.join(',')}]`],
     [`${PREFIX}Array<${PREFIX}Date>`]: [`[${SETS.Date.join(',')}]`],
@@ -106,8 +111,11 @@ const CMD_LIST = `
       `new Set([${SETS.Integer.join(',')}])`,
     ],
     [`${PREFIX}Set<${PREFIX}Number>`]: [`new Set([${SETS.Number.join(',')}])`],
-    [`${PREFIX}Set<${PREFIX}Sequance10>`]: [
-      `new Set([${SETS.Sequance10.join(',')}])`,
+    [`${PREFIX}Set<${PREFIX}Sequence10>`]: [
+      `new Set([${SETS.Sequence10.join(',')}])`,
+    ],
+    [`${PREFIX}Set<${PREFIX}Sequence100>`]: [
+      `new Set([${SETS.Sequence100.join(',')}])`,
     ],
     [`${PREFIX}Set<${PREFIX}Power>`]: [`new Set([${SETS.Power.join(',')}])`],
     [`${PREFIX}Set<${PREFIX}String>`]: [`new Set([${SETS.String.join(',')}])`],
@@ -208,7 +216,10 @@ const CMD_LIST = `
     }
     return output
   },
-  splitOr = (x) => split(x, OR).map((x) => x.trim()),
+  splitOr = (x) =>
+    split(x, OR)
+      .flat()
+      .map((x) => x.trim()),
   decodeGenerated = (value) => {
     const matches = value.match(new RegExp(/^(.*?)(?=(\())/gm))
     if (matches == undefined)
@@ -322,7 +333,12 @@ const CMD_LIST = `
     args.map((x) =>
       x.reduce(
         (acc, item) => (
-          item in FIXTURES ? acc.push(...FIXTURES[item]) : acc.push(item), acc
+          item[0] === PREFIX
+            ? item in FIXTURES
+              ? acc.push(...FIXTURES[item])
+              : (console.log('\x1b[31m', `No fixtures ${item}`, '\x1b[0m'), acc)
+            : acc.push(item),
+          acc
         ),
         []
       )
@@ -393,6 +409,13 @@ const CMD_LIST = `
         '\x1b[31m',
         '\x1b[1m',
         'There is nothing to test',
+        '\x1b[0m'
+      )
+    if (descriptions.length !== results.length)
+      return console.log(
+        '\x1b[31m',
+        '\x1b[1m',
+        `Number of description(${descriptions.length}) is not matching number of results(${results.length})`,
         '\x1b[0m'
       )
     const isLogging = logging !== 'none'
@@ -602,16 +625,9 @@ The jsdoc-spec module searches for pieces of text that look like interactive Jav
         case '-indent':
           indent = +value
           break
-        case '-inline':
-          console.log(
-            '\x1b[30m',
-            (await readFile(filePath, 'utf-8'))
-              .replace(new RegExp(/\s|\t/g), '')
-              .replace(new RegExp(/\n/g), ' '),
-            '\x1b[0m'
-          )
-          return
         case '-gen': {
+          if (value == undefined)
+            return console.log('\x1b[31m', 'No arguments provided', '\x1b[0m')
           const { functionName, args } = decodeGenerated(value)
           const cases = toFixtures(args)
           originalValue = value

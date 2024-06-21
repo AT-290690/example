@@ -168,8 +168,6 @@ List of commands
 ------------------------------------
 | -indent  | indentation 0|1|2|3|4  |
 ------------------------------------
-| -inline  | file into single line  |
-------------------------------------
 | -example |  tutorial example      |
 ------------------------------------
 | -formula |  print tutorial gen    |
@@ -211,10 +209,10 @@ Fixtures:
 
 Use any of these tokens to generate predifined test data
 
-#Integer, #Number, #Sequance10, #Sequance100, #String, #Date, #Boolean, #None, #Function, #Empty, #Array, #Array<#Integer>, #Array<#Number>, #Array<#Sequance10>, #Array<#Sequance100>, #Array<#Strings>, #Array<#Date>, #Array<#Boolean>, #Array<#Empty>, #Array<#None>, #Object, #Map, #Set, #Set<#Integer>, #Set<#Number>, #Set<#Sequance10>, #Set<#Sequance100>, #Set<#String>, #Set<#Date>, #Set<#None>, #Set<#Empty>
+#Integer, #Number, #Sequence10, #Sequence100, #String, #Date, #Boolean, #None, #Function, #Empty, #Array, #Array<#Integer>, #Array<#Number>, #Array<#Sequence10>, #Array<#Sequence100>, #Array<#Strings>, #Array<#Date>, #Array<#Boolean>, #Array<#Empty>, #Array<#None>, #Object, #Map, #Set, #Set<#Integer>, #Set<#Number>, #Set<#Sequence10>, #Set<#Sequence100>, #Set<#String>, #Set<#Date>, #Set<#None>, #Set<#Empty>
 
 ```ts
-percent(#Sequance100; 100)
+percent(#Sequence100; 100)
 // 1 | 2 | 3 | 4 ...  99 | 100
 ```
 

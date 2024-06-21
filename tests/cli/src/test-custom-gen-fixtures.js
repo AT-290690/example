@@ -9,7 +9,7 @@ module.exports.sumReadValues = sumReadValues = (read) => ({
 })
 /**
  * @example
- * getUserInfo(#User; #Boolean)
+ * getUserInfo(#Users; #Boolean)
  * // "?"
  */
 module.exports.getUserInfo = getUserInfo = (user, showCredits) =>

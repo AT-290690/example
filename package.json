@@ -24,7 +24,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.5"
   },
   "scripts": {
     "test": "node tests/parsing/test.js && node tests/cli/test.js"
